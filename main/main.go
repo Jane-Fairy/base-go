@@ -113,7 +113,41 @@ func init() {
 	fmt.Println("this is main.")
 }
 
+var hell chan int
+
 func main() {
+
+	hell := make(chan int)
+
+	go func() {
+		// 从3循环到0
+		for i := 19; i >= 0; i-- {
+			// 发送3到0之间的数值
+			hell <- i
+			// 每次发送完时等待
+			time.Sleep(time.Second)
+		}
+	}()
+	// 遍历接收通道数据
+	for data := range hell {
+		// 打印通道数据
+		fmt.Println(data)
+		// 当遇到数据0时, 退出接收循环
+		if data == 0 {
+			break
+		}
+	}
+
+	//单项通道
+	ch := make(chan int)
+	// 声明一个只能写入数据的通道类型, 并赋值为ch
+	var onlySendChan chan<- int = ch
+	//声明一个只能读取数据的通道类型, 并赋值为ch
+	var onlyRecvChan <-chan int = ch
+	fmt.Println(onlyRecvChan)
+	timer := time.NewTimer(time.Second)
+
+	defer close(onlySendChan)
 
 	middleware.Middle{}.LoggerToFile()
 
