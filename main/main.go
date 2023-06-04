@@ -1,15 +1,11 @@
 package main
 
 import (
-	"bufio"
-	"bytes"
 	"fmt"
-	"learn_golang/middleware"
 	_ "learn_golang/middleware"
 	"log"
 	"math/rand"
 	"runtime"
-	"sort"
 	"sync"
 	"time"
 )
@@ -117,103 +113,91 @@ var hell chan int
 
 func main() {
 
-	hell := make(chan int)
+	reflectDemo()
+	//syncGroup()
+	//hell := make(chan int)
 
-	go func() {
-		// 从3循环到0
-		for i := 19; i >= 0; i-- {
-			// 发送3到0之间的数值
-			hell <- i
-			// 每次发送完时等待
-			time.Sleep(time.Second)
-		}
-	}()
+	//go func() {
+	//	// 从3循环到0
+	//	for i := 19; i >= 0; i-- {
+	//		// 发送3到0之间的数值
+	//		hell <- i
+	//		// 每次发送完时等待
+	//		time.Sleep(time.Second)
+	//	}
+	//}()
 	// 遍历接收通道数据
-	for data := range hell {
-		// 打印通道数据
-		fmt.Println(data)
-		// 当遇到数据0时, 退出接收循环
-		if data == 0 {
-			break
-		}
-	}
+	//for data := range hell {
+	//	// 打印通道数据
+	//	fmt.Println(data)
+	//	// 当遇到数据0时, 退出接收循环
+	//	if data == 0 {
+	//		break
+	//	}
+	//}
 
 	//单项通道
-	ch := make(chan int)
-	// 声明一个只能写入数据的通道类型, 并赋值为ch
-	var onlySendChan chan<- int = ch
-	//声明一个只能读取数据的通道类型, 并赋值为ch
-	var onlyRecvChan <-chan int = ch
-	fmt.Println(onlyRecvChan)
-	timer := time.NewTimer(time.Second)
+	//ch := make(chan int)
+	//// 声明一个只能写入数据的通道类型, 并赋值为ch
+	//var onlySendChan chan<- int = ch
+	////声明一个只能读取数据的通道类型, 并赋值为ch
+	//var onlyRecvChan <-chan int = ch
+	//fmt.Println(onlyRecvChan)
+	////timer := time.NewTimer(time.Second)
+	//
+	//defer close(onlySendChan)
+	//
+	//middleware.Middle{}.LoggerToFile()
+	//
+	//names := myStringSort{
+	//	"3. Triple Kill",
+	//	"5. Penta Kill",
+	//	"2. Double Kill",
+	//	"4. Quadra Kill",
+	//	"1. First Blood",
+	//}
+	//// 使用sort包进行排序
+	//sort.Sort(names)
+	//// 遍历打印结果
+	//
+	////i := int8(9)
+	//
+	////for _, v := range names {
+	////	fmt.Printf("%s\n", v)
+	////}
+	////Read 方法
+	//date := []byte("hello world")
+	//reader := bytes.NewReader(date)
+	//
+	//newReader := bufio.NewReader(reader)
+	//var buf [128]byte
+	//newReader.Read(buf[:])
+	//
+	//var rd Road = Road(999)
+	//r := &rd
+	//runtime.SetFinalizer(r, finalizerDeo)
 
-	defer close(onlySendChan)
+	//for i := 0; i < 10; i++ {
+	//	time.Sleep(time.Second)
+	//	runtime.GC()
+	//}
 
-	middleware.Middle{}.LoggerToFile()
+	//go func() {
+	//	//fibonacci
+	//	fmt.Println("斐波那契：")
+	//	fmt.Println(fibonacci(10))
+	//
+	//	//阶层
+	//	fmt.Println("n的阶层")
+	//	fmt.Println(Factorial(2))
+	//
+	//	var invoker interfaceDemo
+	//	s := new(Strut)
+	//
+	//	invoker = s
+	//	invoker.Call("hello struct")
+	//}()
 
-	names := myStringSort{
-		"3. Triple Kill",
-		"5. Penta Kill",
-		"2. Double Kill",
-		"4. Quadra Kill",
-		"1. First Blood",
-	}
-	// 使用sort包进行排序
-	sort.Sort(names)
-	// 遍历打印结果
-
-	//i := int8(9)
-
-	for _, v := range names {
-		fmt.Printf("%s\n", v)
-	}
-	//Read 方法
-	date := []byte("hello world")
-	reader := bytes.NewReader(date)
-
-	newReader := bufio.NewReader(reader)
-	var buf [128]byte
-	newReader.Read(buf[:])
-
-	var rd Road = Road(999)
-	r := &rd
-	runtime.SetFinalizer(r, finalizerDeo)
-
-	for i := 0; i < 10; i++ {
-		time.Sleep(time.Second)
-		runtime.GC()
-	}
-
-	go func() {
-		//fibonacci
-		fmt.Println("斐波那契：")
-		fmt.Println(fibonacci(10))
-
-		//阶层
-		fmt.Println("n的阶层")
-		fmt.Println(Factorial(2))
-
-		var invoker interfaceDemo
-		s := new(Strut)
-
-		invoker = s
-		invoker.Call("hello struct")
-	}()
-
-	ch := make(chan struct{}, 10)
-	for i := 0; i < 5; i++ {
-		go read(i, ch)
-	}
-	for i := 0; i < 5; i++ {
-		go write(i, ch)
-	}
-	for i := 0; i < 10; i++ {
-		<-ch
-	}
-
-	for true {
-
-	}
 	//fmt.Println("ss")
 	//for y := 1; y <= 9; y++ {
 	//	for x := 1; x <= y; x++ {
@@ -244,7 +228,22 @@ func main() {
 	//	})
 	//})
 	//r.Run() // 监听并在 0.0.0.0:8080 上启动服务
-
+	//r := gin.Default()
+	//
+	//r.GET("/someJSON", func(c *gin.Context) {
+	//	data := map[string]interface{}{
+	//		"lang": "GO语言",
+	//		"tag":  "<br>",
+	//	}
+	//
+	//	// 输出 : {"lang":"GO\u8bed\u8a00","tag":"\u003cbr\u003e"}
+	//	c.AsciiJSON(http.StatusOK, data)
+	//})
+	//
+	//// 监听并在 0.0.0.0:8080 上启动服务
+	//r.Run(":8080")
+	//击球
+	//playball()
 }
 
 func read(n int, cn chan struct{}) {
